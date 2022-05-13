@@ -6,17 +6,18 @@ def create_database():
     db = sqlite3.connect("food_search.db")
     cursor = db.cursor()
 
+    cursor.execute('''DROP TABLE ingredients''')
+
     cursor.execute('''
         CREATE TABLE ingredients(
-        id integer,
         ingr string,
         recipe integer
         )
     ''')
+    cursor.execute('''DROP TABLE recipes''')
 
     cursor.execute('''
-            CREATE TABLE recipes(
-            id integer,
+            CREATE TABLE recipes (
             recipe json
             )
         ''')
@@ -29,8 +30,8 @@ def add_to_database(data):
     cursor = db.cursor()
 
     cursor.execute(
-        "insert into recipes values (?,?)",
-        [1, json.dumps(data) ]
+        "insert into recipes values (?)",
+        [json.dumps(data)]
     )
 
     db.commit()
@@ -45,7 +46,7 @@ def read_from_database():
     cursor = db.cursor()
 
     cursor.execute('''
-                SELECT * from recipes
+                SELECT rowid, recipe from recipes
             ''')
 
     rows = cursor.fetchall()
@@ -64,9 +65,10 @@ def read_json_data():
         return json_object
 
 if __name__ == '__main__':
-    #create_database()
-    #data = read_json_data()
-    #add_to_database(data)
+    create_database()
+    data = read_json_data()
+    add_to_database(data)
     data = read_from_database()
+    #print(data)
     pprint.pprint(json.loads(data[0][1]))
 
