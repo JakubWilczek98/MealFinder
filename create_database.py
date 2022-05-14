@@ -64,7 +64,7 @@ def read_from_database():
     cursor = db.cursor()
 
     cursor.execute('''
-                SELECT rowid, recipe from recipes
+                SELECT recipe from recipes where rowid=15
             ''')
 
     rows = cursor.fetchall()
@@ -83,10 +83,10 @@ def read_json_data():
         return json_object
 
 if __name__ == '__main__':
-    create_database()
+    #create_database()
     #data = read_json_data()
     #add_to_database(data)
-    #data = read_from_database()
-    #print(data)
-    #pprint.pprint(json.loads(data[0][1]))
+    data = read_from_database()
+    #print()
+    pprint.pprint(json.loads(data[0][0]))
 
