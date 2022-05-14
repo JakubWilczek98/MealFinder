@@ -66,6 +66,10 @@ def find_food(ingredients, excludeIngredients):
 
         return doc
 
+    def save_to_html_file(doc):
+        with open("index.html", "w") as html_file:
+            html_file.write(str(doc))
+
     def check_database(ingredients, excludeIngredients):
         # Preparation of data from the database for comparison
 
@@ -135,6 +139,8 @@ def find_food(ingredients, excludeIngredients):
 
         db.commit()
         db.close()
+
+        save_to_html_file(doc)
         return doc
 
     else:
@@ -154,9 +160,11 @@ def find_food(ingredients, excludeIngredients):
 
         db.commit()
         db.close()
+
+        save_to_html_file(doc)
         return doc
 
 if __name__ == '__main__':
-    print(find_food(['tomato','eggs','pasta'], ['plum']))
+    print(find_food(['tomato','eggs','pasta','butter'], ['plum']))
 
 

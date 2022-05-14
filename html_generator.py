@@ -61,13 +61,17 @@ def create_page(ingredience, excludeIngredients, recipe):
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js")
 
+    with open("index.html", "w") as html_file:
+        html_file.write(str(doc))
+        print("Html file created")
+
     print(doc)
 
 db = sqlite3.connect("food_search.db")
 cursor = db.cursor()
 
 cursor.execute(
-    "SELECT recipe from recipes where rowid=15"
+    "SELECT recipe from recipes where rowid=1"
 )
 
 recipe = cursor.fetchall()
