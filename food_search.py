@@ -45,7 +45,7 @@ def find_food(ingredients, excludeIngredients):
 
     def create_new_combination(ingredients, excludeIngredients):
         data = requests.get(
-            f"https://api.spoonacular.com/recipes/complexSearch?includeIngredients={','.join([str(item) for item in ingredients])}&excludeIngredients={','.join([str(item) for item in excludeIngredients])}&fillIngredients=true&number=2&apiKey=499e83f1ec4c45b18cea15d1d236cd1b").json()
+            f"https://api.spoonacular.com/recipes/complexSearch?includeIngredients={','.join([str(item) for item in ingredients])}&excludeIngredients={','.join([str(item) for item in excludeIngredients])}&fillIngredients=true&sort=min-missing-ingredients&number=2&apiKey=499e83f1ec4c45b18cea15d1d236cd1b").json()
 
         db = sqlite3.connect("food_search.db")
         cursor = db.cursor()
