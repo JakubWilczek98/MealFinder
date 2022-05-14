@@ -61,11 +61,6 @@ def create_page(ingredience, excludeIngredients, recipe):
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js")
 
-
-
-
-
-
     print(doc)
 
 db = sqlite3.connect("food_search.db")
