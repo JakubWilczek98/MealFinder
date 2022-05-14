@@ -1,5 +1,7 @@
 import sys
 import sqlite3
+import json
+import requests
 
 #python food_search.py find_food 1 1
 
@@ -17,12 +19,15 @@ def find_food(ingredients, excludeIngredients):
         db.commit()
         db.close()
 
-    add_to_ingredients_database(ingredients,excludeIngredients)
-
     def check_database(ingredients, excludeIngredients):
-        def show_results(rows):
-            for row in rows:
-                print(row)
+
+        # Preparation of data from the database for comparison
+        def convert(string):
+            string = string.replace("[", "")
+            string = string.replace("]", "")
+            string = string.replace("'", "")
+            li = list(string.split(","))
+            return li
 
         db = sqlite3.connect("food_search.db")
         cursor = db.cursor()
@@ -33,29 +38,51 @@ def find_food(ingredients, excludeIngredients):
 
         rows = cursor.fetchall()
 
-        show_results(rows)
+
+        #Checking if the combination has already been used
         for row in rows:
-            if row[1] ==  and row[2] == excludeIngredients:
-                result = 'True'
-                return result
+            if convert(row[1]) == ingredients and convert(row[2]) == excludeIngredients:
+                value = True
             else:
-                result = 'False'
-
-        return result
-
-        #show_results(rows)
-
+                value = False
 
         db.commit()
         db.close()
 
-    print(check_database(ingredients, excludeIngredients))
+        return value
 
+    def create_new_combination(ingredients, excludeIngredients):
+        data = requests.get(
+            "https://api.spoonacular.com/recipes/complexSearch?includeIngredients=tomato,cheese&excludeIngredients=eggs&fillIngredients=true&number=2&apiKey=499e83f1ec4c45b18cea15d1d236cd1b").json()
 
+        db = sqlite3.connect("food_search.db")
+        cursor = db.cursor()
 
+        cursor.execute(
+            "insert into recipes values (?)",
+            [json.dumps(data)]
+        )
 
+        cursor.execute(
+            "SELECT max(rowid) from recipes"
+        )
 
+        last_rowid = cursor.fetchall()
 
+        cursor.execute(
+            "insert into ingredients values (?,?,?)",
+            [str(ingredients), str(excludeIngredients), last_rowid[0][0]]
+        )
+
+        db.commit()
+        db.close()
+
+        return last_rowid[0][0]
+
+    print(create_new_combination(ingredients, excludeIngredients))
+
+    #add_to_ingredients_database(ingredients, excludeIngredients)
+    #print(check_database(ingredients, excludeIngredients))
     return ingredients, excludeIngredients
 
 

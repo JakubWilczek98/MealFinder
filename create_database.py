@@ -83,10 +83,10 @@ def read_json_data():
         return json_object
 
 if __name__ == '__main__':
-    create_database()
+    #create_database()
     #data = read_json_data()
     #add_to_database(data)
-    #data = read_from_database()
-    #print(data)
+    data = read_from_database()
+    print(data)
     #pprint.pprint(json.loads(data[0][1]))
 
