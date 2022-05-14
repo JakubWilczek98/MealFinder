@@ -113,6 +113,8 @@ def find_food(ingredients, excludeIngredients):
 
 if __name__ == '__main__':
     #globals()[sys.argv[1]](sys.argv[2], sys.argv[3])
-    print(find_food(['tomato','cheese'], ['eggs'])[2])
+    recipe = json.loads(find_food(['tomato','cheese','potatoes'], ['eggs'])[2][0][0])
+    pprint.pprint(recipe)
+
 
 
