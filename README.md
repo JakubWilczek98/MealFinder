@@ -18,9 +18,9 @@ If someone wants to find meals with the same input as before the resulting meals
 ## Clear and create database using database_create.py.
 
 ## Required modules:
-### pip install requests
-### pip install pip install googletrans
-### pip install pip install dominate
+### `pip install requests`
+### `pip install pip install googletrans`
+### `pip install pip install dominate`
 
 ## Example output for ['bread', 'cheese', 'ham', 'eggs', 'chicken breast'] as ingredience and ingredients to exclude: ['cucumber'].
 The output does not have styling, bootstrap was included for basic responsiveness and readability.
