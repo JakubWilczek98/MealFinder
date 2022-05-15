@@ -50,8 +50,18 @@ def find_food(ingredients, excludeIngredients):
                                         span(parameter['amount'], parameter['unit'])
                                         br()
                                 br()
+                                h4('Caloric Breakdown')
+                                span('Percent carbs: ')
+                                span(result['nutrition']['caloricBreakdown']['percentCarbs'])
+                                br()
+                                span('Percent fat: ')
+                                span(result['nutrition']['caloricBreakdown']['percentFat'])
+                                br()
+                                span('Percent protein: ')
+                                span(result['nutrition']['caloricBreakdown']['percentProtein'])
+                                br()
+                                br()
                                 h4('Missed ingredient count: ', result['missedIngredientCount'])
-
                                 h4('Missed ingredients list:')
                                 for missed_ingredience in result['missedIngredients']:
                                     li(span(missed_ingredience['name']), span(translator.translate(missed_ingredience['name'], dest='pl').text))
@@ -168,6 +178,6 @@ def find_food(ingredients, excludeIngredients):
         return doc
 
 if __name__ == '__main__':
-    print(find_food(['cherry tomatoes','Eggs','Pasta','buTTer'], ['plum']))
+    print(find_food(['cherry tomatoes','bred','Pasta','buTTer'], ['plum']))
 
 
