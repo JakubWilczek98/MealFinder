@@ -7,6 +7,11 @@ import json
 import requests
 
 def create_page(ingredience, excludeIngredients, recipe):
+    def save_to_html_file(doc,ingrediences):
+        with open('_'.join([str(item).replace(" ", "") for item in ingrediences]) + ".html", "w") as html_file:
+            html_file.write(str(doc))
+
+
     doc = dominate.document(title='food_search')
     with doc.head:
         link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css")
@@ -61,10 +66,8 @@ def create_page(ingredience, excludeIngredients, recipe):
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js")
 
-    with open("index.html", "w") as html_file:
-        html_file.write(str(doc))
-        print("Html file created")
 
+    save_to_html_file(doc, ingredience)
     print(doc)
 
 db = sqlite3.connect("food_search.db")
@@ -81,4 +84,4 @@ db.close()
 
 recipe = json.loads(recipe[0][0])
 
-create_page(['tomato','cheese'], ['eggs'], recipe)
+create_page(['cherry tomatoes','cheese'], ['eggs'], recipe)

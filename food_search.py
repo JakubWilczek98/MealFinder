@@ -8,7 +8,10 @@ from googletrans import Translator
 #python food_search.py find_food 1 1
 
 def find_food(ingredients, excludeIngredients):
-    def create_page(ingredience, excludeIngredients, recipe):
+    ingredients = list((map(lambda x: x.lower(), ingredients)))
+    excludeIngredients = list((map(lambda x: x.lower(), excludeIngredients)))
+
+    def create_page(ingredients, excludeIngredients, recipe):
         translator = Translator()
         doc = dominate.document(title='food_search')
         with doc.head:
@@ -21,7 +24,7 @@ def find_food(ingredients, excludeIngredients):
                 with div(cls='row'):
                     with div(cls='col'):
                         h4('Your ingredients:')
-                        span(','.join([str(item) for item in ingredience]))
+                        span(','.join([str(item) for item in ingredients]))
                     with div(cls='col'):
                         h4('Excluded ingredients:')
                         span(','.join([str(item) for item in excludeIngredients]))
@@ -66,8 +69,8 @@ def find_food(ingredients, excludeIngredients):
 
         return doc
 
-    def save_to_html_file(doc):
-        with open("index.html", "w") as html_file:
+    def save_to_html_file(doc, ingredients):
+        with open('_'.join([str(item).replace(" ", "").lower() for item in ingredients]) + ".html", "w") as html_file:
             html_file.write(str(doc))
 
     def check_database(ingredients, excludeIngredients):
@@ -140,7 +143,7 @@ def find_food(ingredients, excludeIngredients):
         db.commit()
         db.close()
 
-        save_to_html_file(doc)
+        save_to_html_file(doc, ingredients)
         return doc
 
     else:
@@ -161,10 +164,10 @@ def find_food(ingredients, excludeIngredients):
         db.commit()
         db.close()
 
-        save_to_html_file(doc)
+        save_to_html_file(doc, ingredients)
         return doc
 
 if __name__ == '__main__':
-    print(find_food(['tomato','eggs','pasta','butter'], ['plum']))
+    print(find_food(['cherry tomatoes','Eggs','Pasta','buTTer'], ['plum']))
 
 
