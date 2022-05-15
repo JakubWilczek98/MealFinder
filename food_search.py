@@ -5,7 +5,6 @@ import dominate
 from dominate.tags import *
 from googletrans import Translator
 
-#python food_search.py find_food 1 1
 
 def find_food(ingredients, excludeIngredients):
     ingredients = list((map(lambda x: x.lower(), ingredients)))
@@ -178,6 +177,6 @@ def find_food(ingredients, excludeIngredients):
         return doc
 
 if __name__ == '__main__':
-    print(find_food(['cherry tomatoes','bred','Pasta','buTTer'], ['plum']))
+    print(find_food(['bread','cheese','ham','eggs','chicken breast'], ['cucumber']))
 
 
